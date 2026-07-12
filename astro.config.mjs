@@ -6,7 +6,7 @@ export default defineConfig({
   site: 'https://CrazyRabbitttt.github.io',
   // 如果仓库名不是 <用户名>.github.io，需要设置 base
   // 例如仓库名为 my-blog，则 base 为 '/my-blog/'
-  base: '/my-blog/',
+  base: '/blog/',
   integrations: [
     starlight({
       title: '我的博客',
