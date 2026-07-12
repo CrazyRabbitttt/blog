@@ -1,0 +1,40 @@
+---
+title: 首页
+description: 欢迎来到我的博客
+template: splash
+hero:
+  tagline: 记录学习笔记、技术文章与个人想法
+  actions:
+    - text: 开始阅读
+      link: /notes/welcome/
+      icon: right-arrow
+      variant: primary
+    - text: GitHub
+      link: https://github.com/你的用户名/my-blog
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## 知识库
+
+<CardGrid stagger>
+  <Card title="学习笔记" icon="pencil">
+    技术学习过程中的笔记与总结，涵盖 AI Infra、后端开发等方向。
+  </Card>
+  <Card title="技术文章" icon="document">
+    深入技术细节的文章，从原理到实践。
+  </Card>
+  <Card title="随笔想法" icon="star">
+    记录日常思考与灵感。
+  </Card>
+  <Card title="关于" icon="rocket">
+    关于本站和作者的信息。
+  </Card>
+</CardGrid>
+
+## 最近更新
+
+- [欢迎来到我的博客](/notes/welcome/) — 开始你的阅读之旅
+- [用 MLX 从零实现 Qwen3 推理](/articles/mlx-qwen3/) — tiny-llm 课程学习笔记
+- [搭建这个博客的过程](/thoughts/build-this-blog/) — 如何用 Astro Starlight 搭建免费博客
