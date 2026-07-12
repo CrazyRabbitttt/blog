@@ -12,7 +12,7 @@ export default defineConfig({
       title: '我的博客',
       description: '记录学习笔记与想法',
       social: [
-        { icon: 'github', label: 'GitHub', href: 'https://github.com/CrazyRabbitttt/my-blog' },
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/CrazyRabbitttt/blog' },
       ],
       sidebar: [
         {
