@@ -3,7 +3,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://你的用户名.github.io',
+  site: 'https://CrazyRabbitttt.github.io',
   // 如果仓库名不是 <用户名>.github.io，需要设置 base
   // 例如仓库名为 my-blog，则 base 为 '/my-blog/'
   base: '/my-blog/',
@@ -12,7 +12,7 @@ export default defineConfig({
       title: '我的博客',
       description: '记录学习笔记与想法',
       social: [
-        { icon: 'github', label: 'GitHub', href: 'https://github.com/你的用户名/my-blog' },
+        { icon: 'github', label: 'GitHub', href: 'https://github.com/CrazyRabbitttt/my-blog' },
       ],
       sidebar: [
         {
