@@ -1,6 +1,7 @@
 ---
 title: 关于
 description: 关于本站和作者
+date: 2026-06-15
 ---
 
 ## 关于本站
@@ -19,8 +20,7 @@ description: 关于本站和作者
 
 ## 联系方式
 
-- GitHub: [你的用户名](https://github.com/你的用户名)
-- Email: your@email.com
+- GitHub: [CrazyRabbitttt](https://github.com/CrazyRabbitttt)
 
 ## 技术栈
 

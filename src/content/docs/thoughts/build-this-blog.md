@@ -1,6 +1,8 @@
 ---
 title: 搭建这个博客的过程
 description: 如何用 Astro Starlight 搭建免费博客
+date: 2026-06-28
+lastUpdated: 2026-07-21
 ---
 
 ## 为什么选择 Astro Starlight

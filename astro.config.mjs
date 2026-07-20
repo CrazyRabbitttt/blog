@@ -1,16 +1,19 @@
 import starlight from '@astrojs/starlight';
+import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://CrazyRabbitttt.github.io',
-  // 如果仓库名不是 <用户名>.github.io，需要设置 base
-  // 例如仓库名为 my-blog，则 base 为 '/my-blog/'
   base: '/blog/',
   integrations: [
     starlight({
       title: '我的博客',
-      description: '记录学习笔记与想法',
+      description: '记录学习笔记、技术文章与个人想法',
+      lastUpdated: true,
+      editLink: {
+        baseUrl: 'https://github.com/CrazyRabbitttt/blog/edit/master/',
+      },
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/CrazyRabbitttt/blog' },
       ],
@@ -43,5 +46,6 @@ export default defineConfig({
         './src/styles/custom.css',
       ],
     }),
+    sitemap(),
   ],
 });

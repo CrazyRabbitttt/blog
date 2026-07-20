@@ -1,21 +1,93 @@
-/* 自定义样式 */
-
-/* 调整首页 hero 区域 */
+/* ===== 首页 hero 区域 ===== */
 .hero {
   padding: 3rem 1.5rem !important;
 }
+
+.hero > img {
+  max-width: 320px;
+}
+
+/* ===== 文章排版 ===== */
 
 /* 文章标题间距 */
 .sl-markdown-content h1 {
   margin-top: 0 !important;
 }
 
-/* 代码块圆角 */
+/* 标题层次感 */
+.sl-markdown-content h2 {
+  margin-top: 2.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--sl-color-gray-5);
+}
+
+.sl-markdown-content h3 {
+  margin-top: 2rem;
+}
+
+/* ===== 代码块 ===== */
 .expressive-code pre {
   border-radius: 12px !important;
 }
 
+/* 内联代码样式 */
+.sl-markdown-content :not(pre) > code {
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  background-color: var(--sl-color-gray-7);
+}
+
+/* ===== 侧边栏 ===== */
+
 /* 侧边栏激活项加粗 */
 .sidebar-link[aria-current='page'] {
   font-weight: 700;
+}
+
+/* 侧边栏分组标签 */
+.sidebar-group-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* ===== 卡片样式 ===== */
+
+/* 首页卡片悬停效果 */
+.card-grid .card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-grid .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== 链接样式 ===== */
+.sl-markdown-content a {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.sl-markdown-content a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ===== 响应式优化 ===== */
+@media (max-width: 768px) {
+  .hero {
+    padding: 2rem 1rem !important;
+  }
+
+  .sl-markdown-content h2 {
+    margin-top: 2rem;
+  }
+}
+
+/* ===== 暗色模式优化 ===== */
+:root[data-theme='dark'] .card-grid .card:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
 }

@@ -1,6 +1,7 @@
 ---
 title: 欢迎来到我的博客
 description: 开始你的阅读之旅
+date: 2026-06-15
 ---
 
 ## 你好
@@ -17,6 +18,6 @@ description: 开始你的阅读之旅
 
 左侧的侧边栏可以帮助你导航到不同的分类。你也可以使用顶部的搜索功能快速找到感兴趣的内容。
 
-如果你有任何问题或建议，欢迎在 [GitHub](https://github.com/你的用户名/my-blog) 上提 Issue。
+如果你有任何问题或建议，欢迎在 [GitHub](https://github.com/CrazyRabbitttt/blog) 上提 Issue。
 
 开始阅读吧！

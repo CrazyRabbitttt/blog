@@ -1,6 +1,8 @@
 ---
 title: 用 MLX 从零实现 Qwen3 推理
 description: tiny-llm 课程 Week 1 学习笔记
+date: 2026-07-10
+lastUpdated: 2026-07-10
 ---
 
 ## 课程简介
