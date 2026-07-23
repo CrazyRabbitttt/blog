@@ -1,48 +1,385 @@
-/* ===== 首页 hero 区域 ===== */
+/* ============================================================
+   博客主题 - 全面美化
+   主题色：靛蓝紫 (Indigo/Violet)
+   ============================================================ */
+
+/* ===== 主题色覆盖 ===== */
+:root,
+::backdrop {
+  /* 暗色模式：靛蓝紫色调 */
+  --sl-hue-accent: 245;
+  --sl-color-accent: hsl(245, 80%, 67%);
+  --sl-color-accent-low: hsl(245, 50%, 20%);
+  --sl-color-accent-high: hsl(245, 80%, 82%);
+}
+
+:root[data-theme='light'],
+[data-theme='light'] ::backdrop {
+  /* 亮色模式 */
+  --sl-color-accent: hsl(245, 75%, 55%);
+  --sl-color-accent-high: hsl(245, 80%, 30%);
+  --sl-color-accent-low: hsl(245, 80%, 92%);
+}
+
+/* ===== 全局基础 ===== */
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sl-color-gray-4);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sl-color-accent);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+/* 文字选中颜色 */
+::selection {
+  background-color: hsla(245, 80%, 67%, 0.3);
+}
+
+/* ===== 导航栏 ===== */
+header {
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  background-color: hsla(224, 14%, 16%, 0.7) !important;
+}
+
+:root[data-theme='light'] header {
+  background-color: hsla(224, 20%, 97%, 0.8) !important;
+}
+
+/* ===== 首页 Hero 区域 ===== */
 .hero {
-  padding: 3rem 1.5rem !important;
+  position: relative;
+  padding: 4rem 1.5rem 3rem !important;
+  overflow: hidden;
 }
 
-.hero > img {
-  max-width: 320px;
+/* Hero 渐变背景 */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      hsla(245, 80%, 67%, 0.12),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 20% 100%,
+      hsla(280, 80%, 67%, 0.08),
+      transparent 60%
+    );
+  pointer-events: none;
 }
 
-/* ===== 文章排版 ===== */
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
 
-/* 文章标题间距 */
+/* Hero 标题 */
+.hero h1 {
+  letter-spacing: -0.02em;
+  background: linear-gradient(
+    135deg,
+    var(--sl-color-white) 0%,
+    var(--sl-color-accent-high) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+:root[data-theme='light'] .hero h1 {
+  background: linear-gradient(
+    135deg,
+    hsl(224, 14%, 16%) 0%,
+    hsl(245, 75%, 45%) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Hero tagline */
+.hero .sl-flex .sl-text-lg {
+  opacity: 0.85;
+  max-width: 36rem;
+}
+
+/* Hero 按钮增强 */
+.hero .sl-flex a[href] {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero .sl-flex a[href]:hover {
+  transform: translateY(-1px);
+}
+
+/* ===== 卡片样式 ===== */
+.card-grid {
+  gap: 1.25rem !important;
+}
+
+.card {
+  position: relative;
+  border: 1px solid var(--sl-color-hairline-light) !important;
+  border-radius: 16px !important;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 卡片顶部渐变装饰线 */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--sl-color-accent),
+    hsl(280, 80%, 67%),
+    var(--sl-color-accent)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--sl-color-accent) !important;
+  box-shadow: 0 8px 24px hsla(245, 80%, 30%, 0.15);
+}
+
+:root[data-theme='dark'] .card:hover {
+  box-shadow: 0 8px 24px hsla(245, 80%, 67%, 0.15);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* 卡片图标 */
+.card .sl-flex .sl-icon {
+  transition: transform 0.3s ease;
+}
+
+.card:hover .sl-flex .sl-icon {
+  transform: scale(1.1);
+}
+
+/* 卡片标题 */
+.card h2,
+.card h3 {
+  font-weight: 600 !important;
+}
+
+/* ===== 文章内容排版 ===== */
+.sl-markdown-content {
+  --sl-content-line-height: 1.8;
+}
+
 .sl-markdown-content h1 {
   margin-top: 0 !important;
+  letter-spacing: -0.02em;
+  font-weight: 700;
 }
 
-/* 标题层次感 */
+/* h2 带渐变底线 */
 .sl-markdown-content h2 {
-  margin-top: 2.5rem;
-  padding-bottom: 0.3rem;
-  border-bottom: 1px solid var(--sl-color-gray-5);
+  margin-top: 3rem;
+  padding-bottom: 0.5rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--sl-color-hairline-light);
+  position: relative;
+}
+
+.sl-markdown-content h2::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--sl-color-accent),
+    hsl(280, 80%, 67%)
+  );
+  border-radius: 2px;
 }
 
 .sl-markdown-content h3 {
+  margin-top: 2.5rem;
+  font-weight: 600;
+  color: var(--sl-color-heading);
+}
+
+.sl-markdown-content h4 {
   margin-top: 2rem;
+  font-weight: 600;
+}
+
+/* 段落 */
+.sl-markdown-content p {
+  margin-block: 1.25em;
+  line-height: 1.8;
+}
+
+/* ===== 链接 ===== */
+.sl-markdown-content a {
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--sl-color-accent);
+  transition: color 0.15s ease;
+  position: relative;
+}
+
+.sl-markdown-content a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
 }
 
 /* ===== 代码块 ===== */
 .expressive-code pre {
   border-radius: 12px !important;
+  border: 1px solid var(--sl-color-hairline-light) !important;
 }
 
-/* 内联代码样式 */
+/* 内联代码 */
 .sl-markdown-content :not(pre) > code {
-  padding: 0.15em 0.4em;
-  border-radius: 4px;
-  font-size: 0.9em;
-  background-color: var(--sl-color-gray-7);
+  padding: 0.15em 0.45em;
+  border-radius: 6px;
+  font-size: 0.875em;
+  font-weight: 500;
+  background-color: var(--sl-color-bg-inline-code);
+  border: 1px solid var(--sl-color-hairline-light);
+}
+
+/* ===== 引用块 ===== */
+.sl-markdown-content blockquote {
+  border-left: 4px solid var(--sl-color-accent) !important;
+  padding: 0.75rem 1.25rem !important;
+  margin: 1.5rem 0 !important;
+  border-radius: 0 8px 8px 0;
+  background-color: var(--sl-color-bg-inline-code);
+  font-style: normal;
+}
+
+.sl-markdown-content blockquote p {
+  margin: 0.5em 0;
+}
+
+/* ===== 表格 ===== */
+.sl-markdown-content table {
+  border-collapse: separate !important;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--sl-color-hairline-light) !important;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+.sl-markdown-content thead {
+  background: linear-gradient(
+    135deg,
+    var(--sl-color-accent-low),
+    hsla(280, 50%, 30%, 0.1)
+  );
+}
+
+:root[data-theme='dark'] .sl-markdown-content thead {
+  background: linear-gradient(
+    135deg,
+    hsla(245, 50%, 20%, 0.6),
+    hsla(280, 50%, 20%, 0.4)
+  );
+}
+
+.sl-markdown-content th {
+  font-weight: 600 !important;
+  text-align: left !important;
+  padding: 0.75rem 1rem !important;
+}
+
+.sl-markdown-content td {
+  padding: 0.65rem 1rem !important;
+  border-top: 1px solid var(--sl-color-hairline-light);
+}
+
+.sl-markdown-content tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.sl-markdown-content tbody tr:hover {
+  background-color: var(--sl-color-bg-inline-code);
+}
+
+/* ===== 列表 ===== */
+.sl-markdown-content ul {
+  margin-block: 1.25em;
+}
+
+.sl-markdown-content ul li::marker {
+  color: var(--sl-color-accent);
+}
+
+.sl-markdown-content ol li::marker {
+  color: var(--sl-color-accent);
+  font-weight: 600;
+}
+
+/* ===== 水平线 ===== */
+.sl-markdown-content hr {
+  border: none !important;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--sl-color-hairline-light),
+    transparent
+  );
+  margin: 3rem 0;
 }
 
 /* ===== 侧边栏 ===== */
 
-/* 侧边栏激活项加粗 */
+/* 侧边栏激活项 */
 .sidebar-link[aria-current='page'] {
   font-weight: 700;
+  color: var(--sl-color-accent);
+  background-color: var(--sl-color-accent-low);
+  border-radius: 8px;
+}
+
+/* 侧边栏链接悬停 */
+.sidebar-link {
+  transition: all 0.15s ease;
+  border-radius: 8px;
 }
 
 /* 侧边栏分组标签 */
@@ -51,43 +388,115 @@
   font-size: 0.85rem;
   text-transform: none;
   letter-spacing: 0.02em;
+  opacity: 0.7;
 }
 
-/* ===== 卡片样式 ===== */
-
-/* 首页卡片悬停效果 */
-.card-grid .card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* 侧边栏滚动条 */
+.sidebar {
+  scrollbar-width: thin;
 }
 
-.card-grid .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* ===== 文章底部组件 ===== */
+
+/* 上一页/下一页按钮 */
+.sl-flex.sl-flex-row-gap > * {
+  border-radius: 12px !important;
+  transition: all 0.2s ease;
 }
 
-/* ===== 链接样式 ===== */
-.sl-markdown-content a {
-  text-decoration: none;
-  font-weight: 500;
+.sl-flex.sl-flex-row-gap > *:hover {
+  border-color: var(--sl-color-accent) !important;
+  transform: translateY(-1px);
 }
 
-.sl-markdown-content a:hover {
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-/* ===== 响应式优化 ===== */
+/* ===== 响应式 ===== */
 @media (max-width: 768px) {
   .hero {
-    padding: 2rem 1rem !important;
+    padding: 2.5rem 1rem 2rem !important;
+  }
+
+  .hero h1 {
+    font-size: 2rem !important;
   }
 
   .sl-markdown-content h2 {
     margin-top: 2rem;
+    font-size: 1.5rem !important;
+  }
+
+  .card {
+    border-radius: 12px !important;
   }
 }
 
-/* ===== 暗色模式优化 ===== */
-:root[data-theme='dark'] .card-grid .card:hover {
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+/* ===== 暗色模式微调 ===== */
+:root[data-theme='dark'] body {
+  background-color: hsl(224, 14%, 10%);
+}
+
+/* 暗色模式卡片悬停 */
+:root[data-theme='dark'] .card:hover {
+  box-shadow: 0 8px 24px hsla(245, 80%, 67%, 0.12);
+}
+
+/* ===== 进度条（顶部装饰） ===== */
+@media (min-width: 72rem) {
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    z-index: 100;
+    background: linear-gradient(
+      90deg,
+      hsl(245, 80%, 67%),
+      hsl(280, 80%, 67%),
+      hsl(245, 80%, 67%)
+    );
+    background-size: 200% 100%;
+    animation: gradient-shift 8s linear infinite;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* ===== 页面淡入动画 ===== */
+main {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== 图片样式 ===== */
+.sl-markdown-content img {
+  border-radius: 12px;
+  box-shadow: var(--sl-shadow-md);
+}
+
+/* ===== 减少动画偏好 ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
