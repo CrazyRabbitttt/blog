@@ -1,0 +1,205 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+const categories: Record<string, string> = {
+  articles: '技术文章',
+  notes: '学习笔记',
+  thoughts: '随笔想法',
+};
+
+const docs = await getCollection('docs');
+
+const articles = docs
+  .filter((doc) => doc.slug !== 'about' && doc.data.date)
+  .map((doc) => {
+    const category = doc.slug.split('/')[0];
+    const wordCount = doc.body.replace(/\s/g, '').length;
+    return {
+      slug: doc.slug,
+      title: doc.data.title,
+      description: doc.data.description ?? '',
+      date: doc.data.date as Date,
+      category,
+      categoryLabel: categories[category] ?? category,
+      readMinutes: Math.max(1, Math.ceil(wordCount / 400)),
+    };
+  })
+  .sort((a, b) => b.date.valueOf() - a.date.valueOf());
+
+function formatDate(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}.${m}.${day}`;
+}
+---
+
+<StarlightPage frontmatter={{ title: '我的博客', template: 'splash', prev: false, next: false }}>
+  <div class="blog-home">
+    {/* ===== Hero ===== */}
+    <header class="hero-section">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-orb hero-orb-3"></div>
+      <div class="hero-content">
+        <span class="hero-badge">
+          <span class="badge-dot"></span>
+          LLM · AI Infra · 推理优化
+        </span>
+        <h1 class="hero-title">技术博客</h1>
+        <p class="hero-desc">
+          深入大模型推理与系统优化的世界
+          <br />
+          从原理到实践，记录每一步探索
+        </p>
+        <div class="hero-stats">
+          <span class="stat-item">
+            <strong>{articles.length}</strong> 篇文章
+          </span>
+          <span class="stat-divider"></span>
+          <span class="stat-item">
+            <strong>{Object.keys(categories).length}</strong> 个分类
+          </span>
+        </div>
+      </div>
+    </header>
+
+    {/* ===== 分类筛选 ===== */}
+    <nav class="filter-bar" aria-label="文章分类筛选">
+      <button class="filter-btn active" data-filter="all">全部</button>
+      {
+        Object.entries(categories).map(([key, label]) => (
+          <button class="filter-btn" data-filter={key}>
+            {label}
+          </button>
+        ))
+      }
+    </nav>
+
+    {/* ===== 文章列表 ===== */}
+    <div class="article-feed" id="article-feed">
+      {
+        articles.map((article, i) => (
+          <a
+            href={`${base}${article.slug}/`}
+            class="article-card"
+            data-category={article.category}
+            style={`--enter-delay: ${Math.min(i * 0.07, 0.5)}s`}
+          >
+            <div class="card-glow" />
+            <div class="card-inner">
+              <div class="card-meta">
+                <span class={`cat-badge cat-${article.category}`}>
+                  {article.categoryLabel}
+                </span>
+                <span class="meta-sep">·</span>
+                <time datetime={article.date.toISOString()}>
+                  {formatDate(article.date)}
+                </time>
+                <span class="meta-sep">·</span>
+                <span class="read-time">{article.readMinutes} 分钟阅读</span>
+              </div>
+              <h2 class="card-title">{article.title}</h2>
+              <p class="card-desc">{article.description}</p>
+              <span class="read-more">
+                阅读全文
+                <svg
+                  class="arrow-icon"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <p class="empty-hint" hidden>该分类下暂无文章</p>
+  </div>
+
+  {/* 全局鼠标光晕 */}
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <script>
+    /* ===== 卡片追光效果 ===== */
+    document.querySelectorAll<HTMLElement>('.article-card').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      });
+    });
+
+    /* ===== 全局光标光晕 ===== */
+    const glow = document.querySelector<HTMLElement>('.cursor-glow');
+    let rafId = 0;
+    document.addEventListener('mousemove', (e) => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        if (glow) {
+          glow.style.left = `${e.clientX}px`;
+          glow.style.top = `${e.clientY}px`;
+        }
+      });
+    });
+
+    /* ===== 分类筛选 ===== */
+    const btns = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const cards = document.querySelectorAll<HTMLElement>('.article-card');
+    const emptyHint = document.querySelector<HTMLElement>('.empty-hint');
+
+    btns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        btns.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const match = filter === 'all' || card.dataset.category === filter;
+          if (match) {
+            card.classList.remove('hidden');
+            card.classList.add('filtering-in');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        if (emptyHint) emptyHint.hidden = visibleCount > 0;
+
+        /* 重新触发入场动画 */
+        setTimeout(() => {
+          cards.forEach((c) => c.classList.remove('filtering-in'));
+        }, 400);
+      });
+    });
+
+    /* ===== 滚动入场动画 ===== */
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    cards.forEach((card) => observer.observe(card));
+  </script>
+</StarlightPage>
